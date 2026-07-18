@@ -575,6 +575,24 @@ a:hover {
   margin-top: 4px;
 }
 
+.validation-box {
+  background: var(--success-soft);
+  border-color: #b7e0cb;
+}
+
+.validation-box .speech-icon {
+  border-color: #b7e0cb;
+  color: var(--success);
+}
+
+.validation-box .speech-label {
+  color: var(--success);
+}
+
+.validation-box .speech-text {
+  border-color: #cfe9db;
+}
+
 .speech-head {
   display: flex;
   align-items: flex-start;

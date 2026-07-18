@@ -17,11 +17,13 @@ const PRESTATIONS = [
     type: "Mariage",
     status: "confirme",
     statusLabel: "Confirmé",
+    dancers: 6,
+    dancersLabel: "6 danseurs",
     priceMain: "452,00 € TTC",
     priceDetail:
-      "Version validée — Formule A : 420 € + 32 € transport = 452,00 € TTC (formule B 582 € non retenue).",
+      "Version validée — Formule A : 420 € + 32 € transport = 452,00 € TTC (formule B 582 € non retenue). Effectif validé : 6 danseurs.",
     notes:
-      "2 danses Bollywood + costumes + ambiance Bhangra participative. Durée totale ≈ 20 min. Hommage aux origines de Nabila (pakistanaise) et union de deux familles / cultures. Présentatrice : Sylvie (annonce aux invités). Prestataire : Praful & danseurs Parvati India (région bordelaise). Tarif validé : 452,00 € TTC.",
+      "2 danses Bollywood + costumes + ambiance Bhangra participative. Durée totale ≈ 20 min · 6 danseurs validés. Hommage aux origines de Nabila (pakistanaise) et union de deux familles / cultures. Présentatrice : Sylvie (annonce aux invités). Prestataire : Praful & danseurs Parvati India (région bordelaise). Tarif validé : 452,00 € TTC.",
 
     speechFr: `Bonsoir à toutes et à tous,
 
@@ -60,48 +62,72 @@ Veuillez accueillir chaleureusement Parvati India !`,
     type: "Gala camping",
     status: "a-suivre",
     statusLabel: "À suivre",
+    dancers: 6,
+    dancersLabel: "6 danseuses (proposé)",
     priceMain: "790 € (6 danseuses)",
     priceDetail:
-      "Spectacle 6 danseuses : 640 € + forfait transport 150 € = 790 €. Barème : 240 € base + 80 € / danseur suppl. (pairs 2→20).",
+      "Spectacle 6 danseuses : 640 € + forfait transport 150 € = 790 €. Barème : 240 € base + 80 € / danseur suppl. (pairs 2→20). Effectif non validé — en attente du directeur.",
     notes:
-      "Pas d’initiation demandée (prestation pendant un gala). Hébergement possible sur place. Devis n° 2026-0726-ISF émis le 13/07/2026. Réponse attendue avant le 1er septembre 2026.",
+      "Pas d’initiation demandée (prestation pendant un gala). Hébergement possible sur place. Devis n° 2026-0726-ISF émis le 13/07/2026. Réponse attendue avant le 1er septembre 2026. En attente de la validation de son directeur.",
     deadline: "2026-09-01",
     devisNumero: "2026-0726-ISF",
     contactEmail: "Isabelle.Fara@siblu.fr",
     contactPhone: null,
+    contactName: "Isabelle Fara",
     repoUrl: "https://github.com/PRAFUL33290/Isabelle-Fara",
     repoName: "Isabelle-Fara",
     repoCreated: "2026-07-13",
     repoPushed: "2026-07-17",
-    tags: ["Siblu", "Gala", "Ronce-les-Bains"],
+    tags: ["Siblu", "Gala", "Ronce-les-Bains", "Directeur"],
   },
   {
     id: "nuit-bibliotheques",
     index: 3,
     title: "Nuit des Bibliothèques",
-    client: "Bibliothèque de Mérignac",
-    organisation: "Institution publique — Mérignac",
+    client: "Delphine Mercury",
+    organisation: "Bibliothèque de Mérignac",
     eventDate: "2026-10-03",
     eventTime: "Horaire à confirmer",
     eventDayLabel: "Samedi",
     lieu: "Mérignac",
     type: "Événement culturel",
-    status: "en-attente",
-    statusLabel: "En attente",
-    priceMain: "400 € – 680 €",
+    status: "confirme",
+    statusLabel: "Confirmé",
+    dancers: 16,
+    dancersLabel: "16 artistes (15 danseuses + 1 danseur)",
+    priceMain: "704 € TTC (estimé)",
     priceDetail:
-      "Spectacle 15 min : 6 artistes 400 € · 16 artistes 560 € · 20 artistes 680 €. Initiations 70–120 €. Transport 15 € (locale) ou 24 €.",
+      "Sélection validée : spectacle 16 artistes 560 € + initiation mixte 1 h 120 € + transport 24 € = 704 €.",
     notes:
-      "Proposition interactive spectacle + options d’initiation. Contact client non nommé dans le dépôt. Vérifier le SIRET affiché sur la page avant envoi.",
+      "Choix validés par Delphine Mercury (message du 12 mai, 11:06). Spectacle 15 danseuses + 1 danseur. Initiation mixte 1 h. Mail récapitulatif annoncé en parallèle. Destinataire côté prestataire : Julien.",
+    validationMessage: `Bonjour,
+
+Je confirme ma sélection pour la Nuit des Bibliothèques (Mérignac, 3 octobre) :
+
+- Spectacle : 16 artistes — 15 danseuses + 1 danseur → 560 EUR
+- Initiation Mixte · 1 heure → 120 EUR
+- Transport → 24 EUR
+
+TOTAL ESTIMÉ : 704 EUR
+
+Message : Bonjour Julien, voici nos choix enfin validés ! Je vous envoie un mail récapitulatif en même temps que cette réponse.
+
+A bientôt !
+
+Cordialement,
+Delphine MERCURY`,
+    validationDate: "2026-05-12",
+    validationTime: "11:06",
     deadline: null,
     devisNumero: null,
     contactEmail: null,
     contactPhone: null,
+    contactName: "Delphine Mercury",
     repoUrl: "https://github.com/PRAFUL33290/NUIT-DES-BIBLIOTHEQUES",
     repoName: "NUIT-DES-BIBLIOTHEQUES",
     repoCreated: "2026-03-13",
     repoPushed: "2026-03-18",
-    tags: ["Bibliothèque", "Mérignac", "Culture"],
+    tags: ["Bibliothèque", "Mérignac", "Culture", "Delphine", "16 artistes"],
   },
 ];
 
@@ -190,6 +216,10 @@ function iconMic() {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg>`;
 }
 
+function iconUsers() {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
+}
+
 function sortPrestations(list, mode) {
   const copy = [...list];
   switch (mode) {
@@ -229,6 +259,8 @@ function filterPrestations(list, query, status) {
       item.speechBy,
       item.speechFr,
       item.speechEn,
+      item.dancersLabel,
+      item.validationMessage,
       ...(item.tags || []),
     ]
       .filter(Boolean)
@@ -381,6 +413,27 @@ function renderCards(list) {
           </div>`
         : "";
 
+      const validationMeta =
+        item.validationDate || item.validationTime
+          ? ` · ${item.validationDate ? formatDateLong(item.validationDate) : ""}${item.validationTime ? " à " + item.validationTime : ""}`
+          : "";
+      const validationBlock = item.validationMessage
+        ? `
+          <div class="speech-box validation-box">
+            <div class="speech-head">
+              <div class="speech-title-row">
+                <span class="speech-icon">${iconMail()}</span>
+                <div>
+                  <p class="speech-label">Message de validation${escapeHtml(validationMeta)}</p>
+                  <p class="speech-by">${escapeHtml(item.contactName || item.client)}</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" data-copy-validation="${escapeAttr(item.id)}">Copier le texte</button>
+            </div>
+            <pre class="speech-text">${escapeHtml(item.validationMessage)}</pre>
+          </div>`
+        : "";
+
       return `
         <article class="card" data-id="${escapeAttr(item.id)}">
           <div class="card-top">
@@ -415,6 +468,18 @@ function renderCards(list) {
                   <p class="info-value">${escapeHtml(item.client)}</p>
                 </div>
               </div>
+              ${
+                item.dancersLabel
+                  ? `
+              <div class="info-row">
+                <div class="info-icon">${iconUsers()}</div>
+                <div>
+                  <p class="info-label">Effectif</p>
+                  <p class="info-value">${escapeHtml(item.dancersLabel)}</p>
+                </div>
+              </div>`
+                  : ""
+              }
               ${contactBlock}
               ${deadlineBlock}
             </div>
@@ -428,6 +493,7 @@ function renderCards(list) {
             ${devisBlock}
             <p class="notes">${escapeHtml(item.notes)}</p>
             ${speechBlock}
+            ${validationBlock}
           </div>
           <div class="card-footer">
             <a class="btn btn-primary" href="${escapeAttr(item.repoUrl)}" target="_blank" rel="noopener noreferrer">Ouvrir le dépôt</a>
@@ -464,6 +530,24 @@ function renderCards(list) {
       const id = btn.getAttribute("data-copy-speech");
       const item = PRESTATIONS.find((p) => p.id === id);
       const text = item?.speechFr || item?.speechEn || "";
+      try {
+        await navigator.clipboard.writeText(text);
+        const prev = btn.textContent;
+        btn.textContent = "Texte copié ✓";
+        setTimeout(() => {
+          btn.textContent = prev;
+        }, 1600);
+      } catch {
+        btn.textContent = "Échec copie";
+      }
+    });
+  });
+
+  el.querySelectorAll("[data-copy-validation]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.getAttribute("data-copy-validation");
+      const item = PRESTATIONS.find((p) => p.id === id);
+      const text = item?.validationMessage || "";
       try {
         await navigator.clipboard.writeText(text);
         const prev = btn.textContent;
