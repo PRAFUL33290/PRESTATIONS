@@ -195,6 +195,37 @@ function relativeLabel(iso) {
   return `Dans ${n} j`;
 }
 
+/** Libellé explicite du nombre de jours restants (basé sur la date du jour). */
+function daysRemainingLabel(iso) {
+  const n = daysUntil(iso);
+  if (n === null) return "";
+  if (n < 0) {
+    const d = Math.abs(n);
+    return d === 1 ? "Dépassé d’1 jour" : `Dépassé de ${d} jours`;
+  }
+  if (n === 0) return "Aujourd’hui — 0 jour restant";
+  if (n === 1) return "1 jour restant";
+  return `${n} jours restants`;
+}
+
+/** Classe CSS selon l’urgence du délai. */
+function countdownTone(iso, urgent = false) {
+  const n = daysUntil(iso);
+  if (n === null) return "countdown-neutral";
+  if (n < 0) return "countdown-past";
+  if (urgent || n <= 7) return "countdown-urgent";
+  if (n <= 30) return "countdown-soon";
+  return "countdown-ok";
+}
+
+function countdownBadge(iso, { urgent = false, prefix = "" } = {}) {
+  const label = daysRemainingLabel(iso);
+  if (!label) return "";
+  const tone = countdownTone(iso, urgent);
+  const text = prefix ? `${prefix} · ${label}` : label;
+  return `<span class="countdown ${tone}">${escapeHtml(text)}</span>`;
+}
+
 function iconCalendar() {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>`;
 }
@@ -283,6 +314,14 @@ function renderStats(list) {
     ? `${formatDateShort(next.eventDate)} · ${next.client}`
     : "—";
   const aSuivre = list.filter((p) => p.status === "a-suivre").length;
+  const nextDays = next ? daysRemainingLabel(next.eventDate) : "—";
+  const nextDeadline = sortPrestations(
+    list.filter((p) => p.deadline),
+    "deadline-asc"
+  )[0];
+  const deadlineHint = nextDeadline
+    ? `${daysRemainingLabel(nextDeadline.deadline)} · ${nextDeadline.client}`
+    : "aucune";
 
   el.innerHTML = `
     <article class="stat-card">
@@ -292,7 +331,7 @@ function renderStats(list) {
     </article>
     <article class="stat-card">
       <p class="label">Prochain événement</p>
-      <p class="value" style="font-size:1.05rem">${next ? relativeLabel(next.eventDate) : "—"}</p>
+      <p class="value" style="font-size:1.05rem">${escapeHtml(nextDays)}</p>
       <p class="hint">${escapeHtml(nextLabel)}</p>
     </article>
     <article class="stat-card">
@@ -303,7 +342,7 @@ function renderStats(list) {
     <article class="stat-card">
       <p class="label">Deadlines</p>
       <p class="value">${withDeadline}</p>
-      <p class="hint">réponses en attente</p>
+      <p class="hint">${escapeHtml(deadlineHint)}</p>
     </article>
   `;
 }
@@ -323,11 +362,17 @@ function renderTimeline(list) {
       const dayNum = date ? date.getDate() : "—";
       const month = date ? MONTHS_FR[date.getMonth()] : "";
       const year = date ? date.getFullYear() : "";
+      const deadlineChip = item.deadline
+        ? countdownBadge(item.deadline, {
+            urgent: !!item.deadlineUrgent,
+            prefix: "Réponse",
+          })
+        : "";
       return `
         <li class="timeline-item">
           <div class="timeline-date">
             <span class="day">${dayNum} ${month}</span>
-            <span class="year">${year} · ${relativeLabel(item.eventDate)}</span>
+            <span class="year">${year}</span>
           </div>
           <div class="timeline-dot-col">
             <span class="timeline-dot" aria-hidden="true"></span>
@@ -338,6 +383,8 @@ function renderTimeline(list) {
             <div class="meta-row">
               <span class="badge badge-${item.status}">${escapeHtml(item.statusLabel)}</span>
               <span class="tag">${escapeHtml(item.type)}</span>
+              ${countdownBadge(item.eventDate, { prefix: "Événement" })}
+              ${deadlineChip}
             </div>
           </div>
         </li>
@@ -379,6 +426,7 @@ function renderCards(list) {
           </div>`
           : "";
 
+      const deadlineDays = item.deadline ? daysRemainingLabel(item.deadline) : "";
       const deadlineBlock = item.deadline
         ? item.deadlineUrgent
           ? `
@@ -387,7 +435,8 @@ function renderCards(list) {
               <span class="deadline-alert-icon">${iconAlert()}</span>
               <div>
                 <p class="deadline-alert-label">Date butoir — réponse obligatoire</p>
-                <p class="deadline-alert-date">${formatDateLong(item.deadline)} <span class="deadline-alert-rel">(${relativeLabel(item.deadline)})</span></p>
+                <p class="deadline-alert-date">${formatDateLong(item.deadline)}</p>
+                <p class="deadline-alert-days">${escapeHtml(deadlineDays)}</p>
               </div>
             </div>
             <p class="deadline-alert-text">${escapeHtml(item.deadlineNote || "Réponse attendue avant cette date.")}</p>
@@ -397,7 +446,8 @@ function renderCards(list) {
             <div class="info-icon">${iconAlert()}</div>
             <div>
               <p class="info-label">Deadline réponse</p>
-              <p class="info-value">${formatDateLong(item.deadline)} <span style="color:var(--warning);font-weight:800">(${relativeLabel(item.deadline)})</span></p>
+              <p class="info-value">${formatDateLong(item.deadline)}</p>
+              ${countdownBadge(item.deadline)}
             </div>
           </div>`
         : "";
@@ -449,6 +499,8 @@ function renderCards(list) {
           </div>`
         : "";
 
+      const eventDays = daysRemainingLabel(item.eventDate);
+
       return `
         <article class="card" data-id="${escapeAttr(item.id)}">
           <div class="card-top">
@@ -459,6 +511,17 @@ function renderCards(list) {
             <h3 class="card-title">${escapeHtml(item.title)}</h3>
             <p class="card-client">${escapeHtml(item.client)}</p>
             <p class="card-org">${escapeHtml(item.organisation)}</p>
+            <div class="card-countdowns">
+              ${countdownBadge(item.eventDate, { prefix: "Événement" })}
+              ${
+                item.deadline
+                  ? countdownBadge(item.deadline, {
+                      urgent: !!item.deadlineUrgent,
+                      prefix: "Réponse",
+                    })
+                  : ""
+              }
+            </div>
           </div>
           <div class="card-body">
             <div class="info-grid">
@@ -466,7 +529,8 @@ function renderCards(list) {
                 <div class="info-icon">${iconCalendar()}</div>
                 <div>
                   <p class="info-label">Date événement</p>
-                  <p class="info-value">${item.eventDayLabel ? escapeHtml(item.eventDayLabel) + " " : ""}${formatDateLong(item.eventDate)}<br><span style="font-weight:500;color:var(--muted)">${escapeHtml(item.eventTime || "")} · ${relativeLabel(item.eventDate)}</span></p>
+                  <p class="info-value">${item.eventDayLabel ? escapeHtml(item.eventDayLabel) + " " : ""}${formatDateLong(item.eventDate)}<br><span style="font-weight:500;color:var(--muted)">${escapeHtml(item.eventTime || "")}</span></p>
+                  <p class="days-remaining ${countdownTone(item.eventDate)}">${escapeHtml(eventDays)}</p>
                 </div>
               </div>
               <div class="info-row">
