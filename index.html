@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Organisation des prestations Parvati India — clients, dates et devis." />
+  <title>Prestations — Parvati India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img
+          src="https://parvati-india.fr/wp-content/uploads/2023/10/LOGO-PARVATI-INDIA-2.png"
+          alt="Parvati India"
+          class="brand-logo"
+          onerror="this.style.display='none'"
+        />
+        <div class="brand-text">
+          <p class="brand-kicker">Parvati India</p>
+          <h1>Prestations clients</h1>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span id="todayLabel" class="pill">Aujourd'hui</span>
+        <span id="countLabel" class="pill pill-muted">0 prestations</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="toolbar" aria-label="Filtres et recherche">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="M20 20l-3.5-3.5" stroke-linecap="round" />
+        </svg>
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Rechercher un client, un lieu, un événement…"
+          autocomplete="off"
+          aria-label="Rechercher une prestation"
+        />
+      </div>
+      <div class="filters">
+        <label class="filter-label" for="sortSelect">Trier</label>
+        <select id="sortSelect" aria-label="Trier les prestations">
+          <option value="event-asc" selected>Date événement ↑</option>
+          <option value="event-desc">Date événement ↓</option>
+          <option value="deadline-asc">Deadline réponse ↑</option>
+          <option value="name-asc">Nom A → Z</option>
+        </select>
+        <label class="filter-label" for="statusFilter">Statut</label>
+        <select id="statusFilter" aria-label="Filtrer par statut">
+          <option value="all" selected>Tous</option>
+          <option value="en-attente">En attente</option>
+          <option value="a-suivre">À suivre</option>
+          <option value="confirme">Confirmé</option>
+          <option value="termine">Terminé</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="stats" id="stats" aria-label="Résumé"></section>
+
+    <section class="timeline-section">
+      <div class="section-head">
+        <h2>Calendrier</h2>
+        <p class="section-sub">Timeline des prochains événements</p>
+      </div>
+      <ol class="timeline" id="timeline" aria-label="Timeline des prestations"></ol>
+    </section>
+
+    <section class="cards-section">
+      <div class="section-head">
+        <h2>Fiches clients</h2>
+        <p class="section-sub">Détails, tarifs et liens vers les dépôts</p>
+      </div>
+      <div class="cards" id="cards" aria-live="polite"></div>
+      <p class="empty" id="emptyState" hidden>Aucune prestation ne correspond à votre recherche.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p><strong>Parvati India</strong> — Danse Bollywood · Bordeaux</p>
+      <p>
+        <a href="mailto:contact@parvati-india.fr">contact@parvati-india.fr</a>
+        ·
+        <a href="tel:0631321053">06 31 32 10 53</a>
+      </p>
+      <p class="footer-note">Données issues des dépôts GitHub clients · Mise à jour manuelle</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
