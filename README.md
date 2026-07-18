@@ -13,7 +13,7 @@ Page d’organisation des clients / devis, triés par date d’événement.
 ## Clients inclus
 
 1. **1er sept. 2026** — Mariage Nabila & Ashley (6 danseurs, 452 €) — annonce par Sylvie
-2. **26 sept. 2026** — Isabelle Fara / Siblu — en attente du directeur
+2. **26 sept. 2026** — Isabelle Fara / Siblu — effectif à son choix, en attente du directeur
 3. **3 oct. 2026** — Nuit des Bibliothèques, Mérignac — Delphine Mercury (16 artistes, 704 €)
 
 ## Lancer en local
