@@ -64,13 +64,15 @@ Veuillez accueillir chaleureusement Parvati India !`,
     statusLabel: "À suivre",
     dancers: null,
     dancersLabel: "À choisir par Isabelle",
-    priceMain: "Selon effectif + transport",
+    priceMain: "Tarif incertain",
     priceDetail:
-      "Barème : 240 € base + 80 € / danseur suppl. (pairs 2→20) + forfait transport 150 €. Ex. 6 danseuses : 640 € + 150 € = 790 €. L’effectif sera choisi par Isabelle.",
+      "Tarif non figé — dépend de l’effectif qu’Isabelle choisira. Barème repère : 240 € base + 80 € / danseur suppl. (pairs 2→20) + forfait transport 150 €. Ex. 6 danseuses : 640 € + 150 € = 790 €.",
     notes:
-      "Pas d’initiation demandée (prestation pendant un gala). Hébergement possible sur place. Devis n° 2026-0726-ISF émis le 13/07/2026. Réponse attendue avant le 1er septembre 2026. En attente de la validation de son directeur. Nombre de danseurs : Isabelle choisira l’effectif.",
-
-    deadline: "2026-09-01",
+      "Pas d’initiation demandée (prestation pendant un gala). Hébergement possible sur place. Devis n° 2026-0726-ISF émis le 13/07/2026. En attente de la validation de son directeur. Nombre de danseurs et donc tarif : Isabelle choisira — montant encore incertain.",
+    deadline: "2026-08-26",
+    deadlineNote:
+      "Délai impératif : réponse d’Isabelle exigée au plus tard 1 mois avant l’événement (26 août 2026). Sans réponse à cette date butoir, la prestation ne peut pas être confirmée.",
+    deadlineUrgent: true,
     devisNumero: "2026-0726-ISF",
     contactEmail: "Isabelle.Fara@siblu.fr",
     contactPhone: null,
@@ -79,7 +81,7 @@ Veuillez accueillir chaleureusement Parvati India !`,
     repoName: "Isabelle-Fara",
     repoCreated: "2026-07-13",
     repoPushed: "2026-07-17",
-    tags: ["Siblu", "Gala", "Ronce-les-Bains", "Directeur"],
+    tags: ["Siblu", "Gala", "Ronce-les-Bains", "Directeur", "Délai"],
   },
   {
     id: "nuit-bibliotheques",
@@ -262,6 +264,7 @@ function filterPrestations(list, query, status) {
       item.speechEn,
       item.dancersLabel,
       item.validationMessage,
+      item.deadlineNote,
       ...(item.tags || []),
     ]
       .filter(Boolean)
@@ -377,7 +380,19 @@ function renderCards(list) {
           : "";
 
       const deadlineBlock = item.deadline
-        ? `
+        ? item.deadlineUrgent
+          ? `
+          <div class="deadline-alert" role="alert">
+            <div class="deadline-alert-head">
+              <span class="deadline-alert-icon">${iconAlert()}</span>
+              <div>
+                <p class="deadline-alert-label">Date butoir — réponse obligatoire</p>
+                <p class="deadline-alert-date">${formatDateLong(item.deadline)} <span class="deadline-alert-rel">(${relativeLabel(item.deadline)})</span></p>
+              </div>
+            </div>
+            <p class="deadline-alert-text">${escapeHtml(item.deadlineNote || "Réponse attendue avant cette date.")}</p>
+          </div>`
+          : `
           <div class="info-row">
             <div class="info-icon">${iconAlert()}</div>
             <div>
@@ -386,7 +401,6 @@ function renderCards(list) {
             </div>
           </div>`
         : "";
-
       const devisBlock = item.devisNumero
         ? `<p class="notes"><strong>Devis n°</strong> ${escapeHtml(item.devisNumero)}</p>`
         : "";
@@ -482,11 +496,13 @@ function renderCards(list) {
                   : ""
               }
               ${contactBlock}
-              ${deadlineBlock}
+              ${item.deadlineUrgent ? "" : deadlineBlock}
             </div>
 
-            <div class="price-box">
-              <p class="price-label">Tarif repère</p>
+            ${item.deadlineUrgent ? deadlineBlock : ""}
+
+            <div class="price-box${item.priceMain && /incertain/i.test(item.priceMain) ? " price-box-uncertain" : ""}">
+              <p class="price-label">${item.priceMain && /incertain/i.test(item.priceMain) ? "Tarif" : "Tarif repère"}</p>
               <p class="price-main">${escapeHtml(item.priceMain)}</p>
               <p class="price-detail">${escapeHtml(item.priceDetail)}</p>
             </div>

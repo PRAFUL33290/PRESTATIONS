@@ -547,6 +547,76 @@ a:hover {
   padding: 12px 14px;
 }
 
+.price-box-uncertain {
+  background: #fff5f5;
+  border-color: #f5c2c2;
+}
+
+.price-box-uncertain .price-label,
+.price-box-uncertain .price-main {
+  color: #b91c1c;
+}
+
+.deadline-alert {
+  background: #fef2f2;
+  border: 2px solid #dc2626;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: #991b1b;
+}
+
+.deadline-alert-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.deadline-alert-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  display: grid;
+  place-items: center;
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.deadline-alert-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.deadline-alert-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #dc2626;
+}
+
+.deadline-alert-date {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #b91c1c;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.deadline-alert-rel {
+  font-weight: 800;
+  color: #dc2626;
+}
+
+.deadline-alert-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #991b1b;
+}
+
 .price-box .price-label {
   font-size: 0.75rem;
   font-weight: 800;
