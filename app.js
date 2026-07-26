@@ -45,6 +45,7 @@ Veuillez accueillir chaleureusement Parvati India !`,
     contactName: "Sylvie",
     repoUrl: "https://github.com/PRAFUL33290/DEVIS-DANSE-BOLLYWOOD---1-SEPTEMBRE-2026",
     repoName: "DEVIS-DANSE-BOLLYWOOD---1-SEPTEMBRE-2026",
+    pageUrl: "https://praful33290.github.io/DEVIS-DANSE-BOLLYWOOD---1-SEPTEMBRE-2026/",
     repoCreated: "2026-03-07",
     repoPushed: "2026-03-07",
     tags: ["Mariage", "Tresses", "Surprise", "Nabila", "Ashley", "Sylvie"],
@@ -79,6 +80,7 @@ Veuillez accueillir chaleureusement Parvati India !`,
     contactName: "Isabelle Fara",
     repoUrl: "https://github.com/PRAFUL33290/Isabelle-Fara",
     repoName: "Isabelle-Fara",
+    pageUrl: "https://praful33290.github.io/Isabelle-Fara/",
     repoCreated: "2026-07-13",
     repoPushed: "2026-07-17",
     tags: ["Siblu", "Gala", "Ronce-les-Bains", "Directeur", "Délai"],
@@ -128,6 +130,7 @@ Delphine MERCURY`,
     contactName: "Delphine Mercury",
     repoUrl: "https://github.com/PRAFUL33290/NUIT-DES-BIBLIOTHEQUES",
     repoName: "NUIT-DES-BIBLIOTHEQUES",
+    pageUrl: "https://praful33290.github.io/NUIT-DES-BIBLIOTHEQUES/",
     repoCreated: "2026-03-13",
     repoPushed: "2026-03-18",
     tags: ["Bibliothèque", "Mérignac", "Culture", "Delphine", "16 artistes"],
@@ -578,6 +581,11 @@ function renderCards(list) {
           </div>
           <div class="card-footer">
             <a class="btn btn-primary" href="${escapeAttr(item.repoUrl)}" target="_blank" rel="noopener noreferrer">Ouvrir le dépôt</a>
+            ${
+              item.pageUrl
+                ? `<a class="btn btn-secondary" href="${escapeAttr(item.pageUrl)}" target="_blank" rel="noopener noreferrer">Voir la page publiée</a>`
+                : ""
+            }
             ${
               item.contactEmail
                 ? `<a class="btn btn-secondary" href="mailto:${escapeAttr(item.contactEmail)}?subject=${encodeURIComponent("Prestation Parvati India — " + item.title)}">Écrire au client</a>`
