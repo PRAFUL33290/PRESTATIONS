@@ -135,6 +135,76 @@ Delphine MERCURY`,
     repoPushed: "2026-03-18",
     tags: ["Bibliothèque", "Mérignac", "Culture", "Delphine", "16 artistes"],
   },
+  {
+    id: "michel-gadroy-soiree-inde",
+    index: 4,
+    title: "Soirée Inde — Spectacle Bollywood",
+    client: "Michel Gadroy",
+    organisation: "Association (réunion de préparation à venir)",
+    eventDate: "2026-10-17",
+    eventTime: "Samedi — horaire à confirmer",
+    eventDayLabel: "Samedi",
+    lieu: "Saint-Avit-de-Vialard",
+    type: "Repas à thème / soirée associative",
+    status: "a-suivre",
+    statusLabel: "À suivre",
+    dancers: 4,
+    dancersLabel: "4 danseurs/danseuses",
+    priceMain: "570 € TTC",
+    priceDetail:
+      "Prestation 4 danseurs/danseuses confirmée à 570 €. Spectacle chorégraphié annoncé sur ~10 à 15 min (présentation initiale : 15 à 20 min). Le cours de danse en live (formule n°2) est une formule séparée.",
+    notes:
+      "Le client a demandé confirmation des conditions avant sa réunion d’association. Séparer repas et spectacle est recommandé pour l’attention du public. Sonorisation : utilisable sur place si disponible ; sinon coût supplémentaire possible selon salle, jauge et intérieur/extérieur.",
+    validationMessage: `Message client (Michel) :
+
+Bjr monsieur
+Merci pour vos propositions.
+Donc si j'ai tout compris car je vais devoir expliquer votre proposition aux membres de l'association.
+Pour une prestation de 4 personnes.
+570€ pour 15 a 20 minutes de danses choregraphiées.
+Puis en fin de soirée on peut danser librement de nouveau 15 a 20 minutes.
+Pouvez vous svp me confirmer si c'est bien cela ?
+Vous avez votre propre sonorisation où faut-il prévoir de notre côté ?
+En règle générale pour les repas à thème nous séparons les moments du repas et les moments spectacles.
+Car si les gens mangent pendant le spectacle, personne ne regarde le spectacle.
+Nous allons avoir bientôt une réunion de préparation et je voudrais avoir les infos pour proposer votre participation.
+Je reviendrai vers vous dès que possible.
+Merci pour vos propositions.
+Bon dimanche Michel
+
+Réponse envoyée :
+
+Bonjour,
+
+Oui, je vous confirme la proposition.
+
+Pour une prestation avec 4 danseurs/danseuses, le tarif est de 570 €.
+
+Cette formule comprend une prestation de danse chorégraphiée d’environ 10 à 15 minutes.
+
+Concernant le moment où nous faisons danser les invités, cela correspond à une autre formule : la formule n°2, avec un cours de danse en live d’une durée d’environ 1 heure.
+
+Pour la sonorisation, si vous avez du matériel sur place, c’est parfait. Si nous devons prévoir notre propre matériel, cela peut engendrer un coût supplémentaire selon la taille de la salle, le nombre de personnes présentes, et si l’événement se déroule en intérieur ou en extérieur.
+
+Vous avez tout à fait raison de séparer le repas et le spectacle, c’est préférable pour que les invités puissent profiter pleinement de la prestation.
+
+N’hésitez pas à revenir vers moi après votre réunion de préparation. Nous pouvons aussi nous appeler si besoin pour clarifier les détails.
+
+Bonne journée à vous.`,
+    validationDate: "2026-08-03",
+    validationTime: null,
+    deadline: null,
+    devisNumero: null,
+    contactEmail: null,
+    contactPhone: null,
+    contactName: "Michel Gadroy",
+    repoUrl: "https://github.com/PRAFUL33290/Michel-Gadroy",
+    repoName: "Michel-Gadroy",
+    pageUrl: "https://praful33290.github.io/Michel-Gadroy/",
+    repoCreated: null,
+    repoPushed: null,
+    tags: ["Michel Gadroy", "Saint-Avit-de-Vialard", "4 danseurs", "570 €", "Soirée Inde"],
+  },
 ];
 
 const MONTHS_FR = [
