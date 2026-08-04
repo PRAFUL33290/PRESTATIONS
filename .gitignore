@@ -3,9 +3,6 @@
 # Devis signés, RIB, pièces d'identité, captures de boîte mail…
 # ─────────────────────────────────────────────────────────────
 
-# Dossier client Isabelle Fara / Siblu (contient RIB + devis)
-/Gala Bollywood Isabelle Fara  Siblu Villages — Camping de Ronce-les-Bains/
-
 # Règles génériques de sécurité
 *.pdf
 *RIB*
