@@ -57,7 +57,7 @@ Veuillez accueillir chaleureusement Parvati India !`,
     client: "Isabelle Fara",
     organisation: "Siblu Villages — Camping de Ronce-les-Bains",
     eventDate: "2026-09-26",
-    eventTime: "Samedi — horaire à confirmer",
+    eventTime: "Samedi — horaires à confirmer avec l’organisation",
     eventDayLabel: "Samedi",
     lieu: "Camping de Ronce-les-Bains, Charente-Maritime",
     type: "Gala camping",
@@ -67,15 +67,17 @@ Veuillez accueillir chaleureusement Parvati India !`,
     dancersLabel: "2 danseurs",
     priceMain: "500,00 € TTC",
     priceDetail:
-      "Tarif validé par Isabelle Fara : prestation Gala Bollywood avec 2 danseurs, pour un total de 500,00 € TTC.",
+      "Effectif et tarif validés : 2 danseurs — 500,00 € TTC, tout compris (3 passages). TVA non applicable, art. 293 B du CGI. Acompte de 30 % (166,66 €) à verser par virement bancaire.",
     notes:
-      "Validation client : 2 danseurs pour le Gala Bollywood. Les conditions restent les mêmes pour l’animation : pas d’initiation demandée (prestation pendant un gala). Hébergement possible sur place. Devis n° 2026-0726-ISF émis le 13/07/2026.",
+      "Devis n° 2026-0726-ISF — version mise à jour du 04/08/2026, envoyée par mail le 4 août 2026 à 17h50 à Isabelle Fara et Margaux Durbach. Déroulé : 3 spectacles Bollywood d’environ 5 à 10 min chacun (après l’entrée, après le plat principal, au dessert), durée variable selon le déroulement du gala. Aucune initiation à la danse prévue (prestation pendant le gala). Scène extérieure, musique sur clé USB. Hébergement possible sur place si nécessaire. Reste à obtenir : bon pour accord signé + acompte de 166,66 €.",
     deadline: "2026-08-26",
     deadlineNote:
-      "Prestation validée par Isabelle Fara : 2 danseurs, total 500,00 € TTC. Les conditions restent les mêmes pour l’animation.",
-    deadlineUrgent: false,
+      "Date butoir : bon pour accord signé et acompte de 30 % (166,66 €) attendus au plus tard 1 mois avant l’événement (26 août 2026). Sans retour à cette date, la prestation ne peut pas être sécurisée.",
+    deadlineUrgent: true,
     devisNumero: "2026-0726-ISF",
+    devisVersion: "Version mise à jour du 04/08/2026",
     contactEmail: "Isabelle.Fara@siblu.fr",
+    contactEmailSecondary: "margaux.durbach@siblu.fr",
     contactPhone: null,
     contactName: "Isabelle Fara",
     repoUrl: "https://github.com/PRAFUL33290/Isabelle-Fara",
@@ -83,7 +85,15 @@ Veuillez accueillir chaleureusement Parvati India !`,
     pageUrl: "https://praful33290.github.io/Isabelle-Fara/",
     repoCreated: "2026-07-13",
     repoPushed: "2026-07-17",
-    tags: ["Siblu", "Gala", "Ronce-les-Bains", "2 danseurs", "500 €"],
+    tags: [
+      "Siblu",
+      "Gala",
+      "Ronce-les-Bains",
+      "2 danseurs",
+      "Devis validé",
+      "Acompte",
+      "Margaux Durbach",
+    ],
   },
   {
     id: "nuit-bibliotheques",
@@ -362,7 +372,9 @@ function filterPrestations(list, query, status) {
       item.priceMain,
       item.devisNumero,
       item.contactEmail,
+      item.contactEmailSecondary,
       item.contactName,
+      item.devisVersion,
       item.speechBy,
       item.speechFr,
       item.speechEn,
@@ -521,6 +533,11 @@ function renderCards(list) {
             <div>
               <p class="info-label">Contact</p>
               <p class="info-value"><a href="mailto:${escapeAttr(item.contactEmail)}">${escapeHtml(item.contactEmail)}</a></p>
+              ${
+                item.contactEmailSecondary
+                  ? `<p class="info-value"><a href="mailto:${escapeAttr(item.contactEmailSecondary)}">${escapeHtml(item.contactEmailSecondary)}</a></p>`
+                  : ""
+              }
             </div>
           </div>`
         : item.contactName
@@ -560,7 +577,7 @@ function renderCards(list) {
           </div>`
         : "";
       const devisBlock = item.devisNumero
-        ? `<p class="notes"><strong>Devis n°</strong> ${escapeHtml(item.devisNumero)}</p>`
+        ? `<p class="notes"><strong>Devis n°</strong> ${escapeHtml(item.devisNumero)}${item.devisVersion ? ` · ${escapeHtml(item.devisVersion)}` : ""}</p>`
         : "";
 
       const speechText = item.speechFr || item.speechEn || "";
