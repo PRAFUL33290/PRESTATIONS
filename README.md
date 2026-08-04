@@ -13,7 +13,7 @@ Page d’organisation des clients / devis, triés par date d’événement.
 ## Clients inclus
 
 1. **1er sept. 2026** — Mariage Nabila & Ashley (6 danseurs, 452 €) — annonce par Sylvie
-2. **26 sept. 2026** — Isabelle Fara / Siblu — tarif incertain, réponse au plus tard 26 août (1 mois avant)
+2. **26 sept. 2026** — Isabelle Fara / Siblu — Gala Bollywood (2 danseurs, 500 € TTC) — validé
 3. **3 oct. 2026** — Nuit des Bibliothèques, Mérignac — Delphine Mercury (16 artistes, 704 €)
 4. **17 oct. 2026** — Soirée Inde, Saint-Avit-de-Vialard — Michel Gadroy (4 danseurs, 570 €)
 
