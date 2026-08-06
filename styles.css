@@ -247,7 +247,7 @@ a:hover {
 /* —— Stats —— */
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
   margin-bottom: 32px;
 }
@@ -258,6 +258,17 @@ a:hover {
   border-radius: var(--radius-sm);
   padding: 16px;
   box-shadow: var(--shadow);
+}
+
+.stat-card-amount {
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--line));
+  background: linear-gradient(160deg, var(--primary-soft) 0%, var(--bg-card) 70%);
+}
+
+.stat-card-amount .value {
+  color: var(--primary);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
 }
 
 .stat-card .label {
@@ -280,6 +291,190 @@ a:hover {
   margin-top: 4px;
   font-size: 0.82rem;
   color: var(--muted);
+}
+
+/* —— À faire —— */
+.todo-section {
+  margin-bottom: 28px;
+}
+
+.todo-panel {
+  background: var(--bg-card);
+  border: 1px solid color-mix(in srgb, var(--warning) 35%, var(--line));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.todo-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, var(--warning-soft) 0%, #fff 65%);
+  border-bottom: 1px solid var(--line);
+}
+
+.todo-title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.todo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--warning);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.todo-title {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.todo-sub {
+  margin-top: 3px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.todo-item.is-done {
+  opacity: 0.58;
+}
+
+.todo-item.is-done .todo-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.todo-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+  cursor: pointer;
+}
+
+.todo-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.todo-box {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border: 2px solid var(--line-strong);
+  border-radius: 6px;
+  background: #fff;
+  position: relative;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.todo-check input:focus-visible + .todo-box {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.todo-check input:checked + .todo-box {
+  border-color: var(--success);
+  background: var(--success);
+}
+
+.todo-check input:checked + .todo-box::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.todo-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.todo-text {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.todo-detail {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.todo-priority {
+  flex-shrink: 0;
+  margin-top: 2px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.todo-priority-haute {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.todo-priority-normale {
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+
+.todo-priority-basse {
+  background: var(--info-soft);
+  color: var(--info);
 }
 
 /* —— Timeline —— */
@@ -1000,6 +1195,12 @@ a:hover {
 }
 
 /* —— Responsive —— */
+@media (max-width: 1100px) {
+  .stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 900px) {
   .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1129,6 +1330,22 @@ a:hover {
     font-size: 0.75rem;
     line-height: 1.35;
     word-break: break-word;
+  }
+
+  .todo-head {
+    padding: 14px;
+  }
+
+  .todo-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .todo-priority {
+    align-self: flex-start;
+    margin-left: 32px;
   }
 
   .header-inner {
@@ -1313,7 +1530,7 @@ a:hover {
   }
 
   .stats {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .speech-text {

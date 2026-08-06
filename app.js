@@ -234,6 +234,61 @@ Bonne journée à vous.`,
   },
 ];
 
+/** Tâches manuelles à traiter (cochables, mémorisées dans le navigateur). */
+const TODOS = [
+  {
+    id: "siblu-refaire-devis",
+    text: "Refaire le devis pour Siblu Village",
+    detail: "Isabelle Fara · Gala Bollywood · Ronce-les-Bains (26 sept.)",
+    priority: "haute",
+    clientId: "isabelle-fara-siblu",
+  },
+  {
+    id: "siblu-logement",
+    text: "Confirmer le logement pour les 4 danseurs (Siblu)",
+    detail: "Retour à donner après validation des danseuses",
+    priority: "haute",
+    clientId: "isabelle-fara-siblu",
+  },
+  {
+    id: "siblu-repas",
+    text: "Confirmer le besoin de repas pour Siblu",
+    detail: "Arrivée avant 19h si restauration — restaurateur indisponible après",
+    priority: "normale",
+    clientId: "isabelle-fara-siblu",
+  },
+  {
+    id: "michel-reunion",
+    text: "Suivre le retour de Michel Gadroy après la réunion d’association",
+    detail: "Soirée Inde · Saint-Avit-de-Vialard (17 oct.) · tarif 570 €",
+    priority: "normale",
+    clientId: "michel-gadroy-soiree-inde",
+  },
+  {
+    id: "michel-horaire",
+    text: "Confirmer l’horaire de la Soirée Inde (Michel Gadroy)",
+    detail: "Horaire encore à préciser",
+    priority: "basse",
+    clientId: "michel-gadroy-soiree-inde",
+  },
+  {
+    id: "senaillac-prep",
+    text: "Préparer l’effectif et le déroulé mariage Nabila & Ashley",
+    detail: "1er sept. · Château de Senaillac · 6 danseurs · 452 € TTC",
+    priority: "normale",
+    clientId: "mariage-senaillac",
+  },
+  {
+    id: "nuit-biblio-recap",
+    text: "Vérifier le mail récap Nuit des Bibliothèques (Delphine Mercury)",
+    detail: "3 oct. · Mérignac · 16 artistes · 704 € estimé",
+    priority: "basse",
+    clientId: "nuit-bibliotheques",
+  },
+];
+
+const TODO_STORAGE_KEY = "parvati-prestations-todos";
+
 const MONTHS_FR = [
   "janvier",
   "février",
@@ -324,6 +379,42 @@ function countdownBadge(iso, { urgent = false, prefix = "" } = {}) {
   const tone = countdownTone(iso, urgent);
   const text = prefix ? `${prefix} · ${label}` : label;
   return `<span class="countdown ${tone}">${escapeHtml(text)}</span>`;
+}
+
+/** Extrait un montant en euros depuis un libellé FR (ex. "452,00 € TTC", "704 € (estimé)"). */
+function parsePriceEuro(str) {
+  if (!str) return null;
+  const raw = String(str).trim();
+  if (!/\d/.test(raw)) return null;
+  if (/incertain|à définir|a definir|n\/a/i.test(raw) && !/\d+[.,]?\d*\s*€/.test(raw)) {
+    return null;
+  }
+  const match = raw.match(/(\d{1,3}(?:[.\s]\d{3})*(?:,\d+)?|\d+(?:,\d+)?)/);
+  if (!match) return null;
+  const normalized = match[1].replace(/[\s.]/g, "").replace(",", ".");
+  const n = Number(normalized);
+  return Number.isFinite(n) ? n : null;
+}
+
+function formatPriceEuro(amount) {
+  return new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+  }).format(amount);
+}
+
+function sumPrices(list) {
+  let total = 0;
+  let counted = 0;
+  let estimated = 0;
+  for (const item of list) {
+    const amount = parsePriceEuro(item.priceMain);
+    if (amount === null) continue;
+    total += amount;
+    counted += 1;
+    if (/estimé|estime/i.test(item.priceMain || "")) estimated += 1;
+  }
+  return { total, counted, estimated };
 }
 
 function iconCalendar() {
@@ -425,11 +516,27 @@ function renderStats(list) {
     ? `${daysRemainingLabel(nextDeadline.deadline)} · ${nextDeadline.client}`
     : "aucune";
 
+  const { total: amountTotal, counted, estimated } = sumPrices(list);
+  const amountLabel = counted ? formatPriceEuro(amountTotal) : "—";
+  let amountHint = counted
+    ? counted === total
+      ? "TTC · prestations affichées"
+      : `TTC · ${counted}/${total} avec tarif`
+    : "aucun tarif renseigné";
+  if (estimated > 0) {
+    amountHint += estimated === 1 ? " · 1 estimé" : ` · ${estimated} estimés`;
+  }
+
   el.innerHTML = `
     <article class="stat-card">
       <p class="label">Prestations</p>
       <p class="value">${total}</p>
       <p class="hint">affichées</p>
+    </article>
+    <article class="stat-card stat-card-amount">
+      <p class="label">Montant total</p>
+      <p class="value">${escapeHtml(amountLabel)}</p>
+      <p class="hint">${escapeHtml(amountHint)}</p>
     </article>
     <article class="stat-card">
       <p class="label">Prochain événement</p>
@@ -802,6 +909,95 @@ function escapeAttr(str) {
   return escapeHtml(str).replace(/'/g, "&#39;");
 }
 
+function loadTodoDone() {
+  try {
+    const raw = localStorage.getItem(TODO_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveTodoDone(map) {
+  try {
+    localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(map));
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
+
+function priorityLabel(priority) {
+  if (priority === "haute") return "Haute";
+  if (priority === "basse") return "Basse";
+  return "Normale";
+}
+
+function renderTodos() {
+  const listEl = document.getElementById("todoList");
+  const progressEl = document.getElementById("todoProgress");
+  if (!listEl) return;
+
+  const doneMap = loadTodoDone();
+  const doneCount = TODOS.filter((t) => doneMap[t.id]).length;
+  if (progressEl) {
+    progressEl.textContent =
+      doneCount === TODOS.length
+        ? `Tout est fait · ${doneCount}/${TODOS.length}`
+        : `${doneCount} / ${TODOS.length} terminées`;
+  }
+
+  // Priorité haute d'abord, puis non cochées, puis texte
+  const order = { haute: 0, normale: 1, basse: 2 };
+  const sorted = [...TODOS].sort((a, b) => {
+    const aDone = doneMap[a.id] ? 1 : 0;
+    const bDone = doneMap[b.id] ? 1 : 0;
+    if (aDone !== bDone) return aDone - bDone;
+    const pa = order[a.priority] ?? 1;
+    const pb = order[b.priority] ?? 1;
+    if (pa !== pb) return pa - pb;
+    return a.text.localeCompare(b.text, "fr");
+  });
+
+  listEl.innerHTML = sorted
+    .map((todo) => {
+      const checked = !!doneMap[todo.id];
+      return `
+        <li class="todo-item${checked ? " is-done" : ""}" data-todo-id="${escapeAttr(todo.id)}">
+          <label class="todo-check">
+            <input type="checkbox" ${checked ? "checked" : ""} data-todo-toggle="${escapeAttr(todo.id)}" />
+            <span class="todo-box" aria-hidden="true"></span>
+            <span class="todo-body">
+              <span class="todo-text">${escapeHtml(todo.text)}</span>
+              ${todo.detail ? `<span class="todo-detail">${escapeHtml(todo.detail)}</span>` : ""}
+            </span>
+          </label>
+          <span class="todo-priority todo-priority-${escapeAttr(todo.priority || "normale")}">${escapeHtml(priorityLabel(todo.priority))}</span>
+        </li>
+      `;
+    })
+    .join("");
+}
+
+function initTodos() {
+  const listEl = document.getElementById("todoList");
+  if (!listEl) return;
+
+  listEl.addEventListener("change", (e) => {
+    const input = e.target.closest("[data-todo-toggle]");
+    if (!input) return;
+    const id = input.getAttribute("data-todo-toggle");
+    const doneMap = loadTodoDone();
+    if (input.checked) doneMap[id] = true;
+    else delete doneMap[id];
+    saveTodoDone(doneMap);
+    renderTodos();
+  });
+
+  renderTodos();
+}
+
 function refresh() {
   const query = document.getElementById("searchInput").value;
   const sort = document.getElementById("sortSelect").value;
@@ -826,6 +1022,7 @@ function initHeaderDate() {
 
 function init() {
   initHeaderDate();
+  initTodos();
   document.getElementById("searchInput").addEventListener("input", refresh);
   document.getElementById("sortSelect").addEventListener("change", refresh);
   document.getElementById("statusFilter").addEventListener("change", refresh);
