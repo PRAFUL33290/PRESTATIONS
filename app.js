@@ -57,29 +57,28 @@ Veuillez accueillir chaleureusement Parvati India !`,
     client: "Isabelle Fara",
     organisation: "Siblu Villages — Camping de Ronce-les-Bains",
     eventDate: "2026-09-26",
-    eventTime: "Samedi — horaires à confirmer avec l’organisation",
+    eventTime: "Arrivée invités 19h30 · repas vers 20h · passages prévus : 20h45, 21h30, 22h",
     eventDayLabel: "Samedi",
     lieu: "Camping de Ronce-les-Bains, Charente-Maritime",
     type: "Gala camping",
     status: "confirme",
     statusLabel: "Confirmé",
-    dancers: 2,
-    dancersLabel: "2 danseurs",
-    priceMain: "500,00 € TTC",
+    dancers: 4,
+    dancersLabel: "4 danseurs",
+    priceMain: "630,00 € TTC",
     priceDetail:
-      "Effectif et tarif validés : 2 danseurs — 500,00 € TTC, tout compris (3 passages). TVA non applicable, art. 293 B du CGI. Acompte de 30 % (166,66 €) à verser par virement bancaire.",
+      "Devis validé par mail le 6 août 2026 : 4 danseurs — 630,00 € TTC, pour 3 danses d’environ 10 minutes. TVA non applicable, art. 293 B du CGI.",
     notes:
-      "Devis n° 2026-0726-ISF — version mise à jour du 04/08/2026, envoyée par mail le 4 août 2026 à 17h50 à Isabelle Fara et Margaux Durbach. Déroulé : 3 spectacles Bollywood d’environ 5 à 10 min chacun (après l’entrée, après le plat principal, au dessert), durée variable selon le déroulement du gala. Aucune initiation à la danse prévue (prestation pendant le gala). Scène extérieure, musique sur clé USB. Hébergement possible sur place si nécessaire. Reste à obtenir : bon pour accord signé + acompte de 166,66 €.",
-    deadline: "2026-08-26",
-    deadlineNote:
-      "Date butoir : bon pour accord signé et acompte de 30 % (166,66 €) attendus au plus tard 1 mois avant l’événement (26 août 2026). Sans retour à cette date, la prestation ne peut pas être sécurisée.",
-    deadlineUrgent: true,
+      "Devis n° 2026-0726-ISF validé par Margaux après échange avec la directrice. Déroulé approximatif : 1er passage entre entrée et plat à 20h45, 2e passage entre plat et fromage à 21h30, 3e passage entre fromage et dessert à 22h. Les invités arrivent à 19h30 et le repas commence vers 20h. Restauration possible si arrivée avant 19h, mais éviter de manger avant de danser pour des raisons de digestion. Logement : confirmation à donner après retour des danseuses.",
+    deadline: null,
+    deadlineNote: null,
+    deadlineUrgent: false,
     devisNumero: "2026-0726-ISF",
-    devisVersion: "Version mise à jour du 04/08/2026",
+    devisVersion: "Validé par mail le 06/08/2026",
     contactEmail: "Isabelle.Fara@siblu.fr",
     contactEmailSecondary: "margaux.durbach@siblu.fr",
     contactPhone: null,
-    contactName: "Isabelle Fara",
+    contactName: "Isabelle Fara / Margaux Durbach",
     repoUrl: "https://github.com/PRAFUL33290/Isabelle-Fara",
     repoName: "Isabelle-Fara",
     pageUrl: "https://praful33290.github.io/Isabelle-Fara/",
@@ -89,11 +88,29 @@ Veuillez accueillir chaleureusement Parvati India !`,
       "Siblu",
       "Gala",
       "Ronce-les-Bains",
-      "2 danseurs",
+      "4 danseurs",
       "Devis validé",
-      "Acompte",
+      "630 €",
       "Margaux Durbach",
     ],
+    validationDate: "2026-08-06",
+    validationMessage: `Bonjour,
+
+Après échange ce matin avec notre directrice, nous vous validons le devis n°2026-0726-ISF d’un montant total de 630€ pour 3 danses d’environ10 minutes avec 4 danseurs.
+
+Les invités arrivent à 19h30, le repas va commencer aux alentours de 20h donc voici une horaire approximative pour les passages :
+
+- 1er passage entre entrée et plat : 20h45
+- 2eme passage entre plat et fromage : 21h30
+- 3eme passage entre fromage et dessert : 22h
+
+Je ne me souviens plus si vous avez besoin d’un repas pour vous 4 mais si besoin, merci de prévoir de venir plus tôt que le début denotre soirée car notre restaurateur ne sera plus disponible à partir de 19h. Tenez moi au courant pour ça 😊
+
+Vous m’aviez dit que vous pensiez ne pas avoir besoin de logement. Pouvez vous me le confirmer ?
+
+En attente de votre confirmation de bonne réception et de votre retour,
+
+Cordialement,`,
   },
   {
     id: "nuit-bibliotheques",
