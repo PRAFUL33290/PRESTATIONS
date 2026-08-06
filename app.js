@@ -244,6 +244,14 @@ const TODOS = [
     clientId: "isabelle-fara-siblu",
   },
   {
+    id: "octobre-sondage-whatsapp",
+    text: "Lancer un sondage WhatsApp pour trouver les danseuses d’octobre",
+    detail:
+      "Effectif pas encore trouvé pour les dates d’octobre (Nuit des Bibliothèques 3 oct. · Michel Gadroy 17 oct.). Envoyer un sondage dispo sur le groupe WhatsApp.",
+    priority: "haute",
+    clientId: null,
+  },
+  {
     id: "siblu-logement",
     text: "Confirmer le logement pour les 4 danseurs (Siblu)",
     detail: "Retour à donner après validation des danseuses",
