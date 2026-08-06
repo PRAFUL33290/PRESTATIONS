@@ -13,7 +13,7 @@ Page d’organisation des clients / devis, triés par date d’événement.
 ## Clients inclus
 
 1. **1er sept. 2026** — Mariage Nabila & Ashley (6 danseurs, 452 €) — annonce par Sylvie
-2. **26 sept. 2026** — Isabelle Fara / Siblu, Ronce-les-Bains — 2 danseurs, 500 € TTC (devis n°2026-0726-ISF) ; bon pour accord + acompte 166,66 € attendus avant le 26 août
+2. **26 sept. 2026** — Isabelle Fara / Siblu, Ronce-les-Bains — 4 danseurs, 630 € TTC (devis n°2026-0726-ISF validé par mail le 6 août) ; passages prévus à 20h45, 21h30 et 22h
 3. **3 oct. 2026** — Nuit des Bibliothèques, Mérignac — Delphine Mercury (16 artistes, 704 €)
 4. **17 oct. 2026** — Soirée Inde, Saint-Avit-de-Vialard — Michel Gadroy (4 danseurs, 570 €)
 
