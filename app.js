@@ -596,6 +596,154 @@ function renderTimeline(list) {
     .join("");
 }
 
+/** Regroupe les prestations par jour (événement + deadline) pour une consultation rapide. */
+function buildCalendarIndex(list) {
+  const index = new Map();
+  const add = (iso, item, kind) => {
+    if (!iso) return;
+    if (!index.has(iso)) index.set(iso, []);
+    index.get(iso).push({ item, kind });
+  };
+  for (const item of list) {
+    add(item.eventDate, item, "event");
+    add(item.deadline, item, "deadline");
+  }
+  return index;
+}
+
+let calendarViewDate = new Date();
+let selectedCalendarDate = null;
+
+function renderCalendar(list) {
+  const monthLabel = document.getElementById("calendarMonthLabel");
+  const weekdaysEl = document.getElementById("calendarWeekdays");
+  const gridEl = document.getElementById("calendarGrid");
+  const detailsEl = document.getElementById("calendarDayDetails");
+  if (!monthLabel || !weekdaysEl || !gridEl || !detailsEl) return;
+
+  const year = calendarViewDate.getFullYear();
+  const month = calendarViewDate.getMonth();
+  monthLabel.textContent = `${MONTHS_FR[month]} ${year}`;
+
+  weekdaysEl.innerHTML = DAYS_FR.slice(1)
+    .concat(DAYS_FR[0])
+    .map((d) => `<span>${d.slice(0, 3)}</span>`)
+    .join("");
+
+  const index = buildCalendarIndex(list);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const firstOfMonth = new Date(year, month, 1);
+  const startOffset = (firstOfMonth.getDay() + 6) % 7; // lundi = 0
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+
+  const cells = [];
+  for (let i = 0; i < totalCells; i++) {
+    const dayNum = i - startOffset + 1;
+    if (dayNum < 1 || dayNum > daysInMonth) {
+      cells.push(`<div class="calendar-cell calendar-cell-empty" aria-hidden="true"></div>`);
+      continue;
+    }
+    const cellDate = new Date(year, month, dayNum);
+    const iso = `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+    const entries = index.get(iso) || [];
+    const isToday = cellDate.getTime() === today.getTime();
+    const isSelected = iso === selectedCalendarDate;
+
+    const dots = entries
+      .map(({ item, kind }) =>
+        kind === "deadline"
+          ? `<span class="calendar-dot legend-deadline" title="Deadline · ${escapeAttr(item.client)}"></span>`
+          : `<span class="calendar-dot legend-${item.status}" title="${escapeAttr(item.client)}"></span>`
+      )
+      .join("");
+
+    const classes = ["calendar-cell"];
+    if (isToday) classes.push("is-today");
+    if (isSelected) classes.push("is-selected");
+    if (entries.length) classes.push("has-events");
+
+    cells.push(`
+      <button type="button" class="${classes.join(" ")}" data-calendar-date="${iso}" aria-label="${dayNum} ${MONTHS_FR[month]} ${year}${entries.length ? `, ${entries.length} prestation(s)` : ""}">
+        <span class="calendar-cell-num">${dayNum}</span>
+        <span class="calendar-cell-dots">${dots}</span>
+      </button>
+    `);
+  }
+
+  gridEl.innerHTML = cells.join("");
+
+  gridEl.querySelectorAll("[data-calendar-date]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const iso = btn.getAttribute("data-calendar-date");
+      selectedCalendarDate = selectedCalendarDate === iso ? null : iso;
+      renderCalendar(list);
+    });
+  });
+
+  if (!selectedCalendarDate) {
+    detailsEl.hidden = true;
+    detailsEl.innerHTML = "";
+    return;
+  }
+
+  const entries = index.get(selectedCalendarDate) || [];
+  detailsEl.hidden = false;
+  if (!entries.length) {
+    detailsEl.innerHTML = `<p class="calendar-day-empty">Aucune prestation le ${escapeHtml(formatDateLong(selectedCalendarDate))}.</p>`;
+    return;
+  }
+
+  detailsEl.innerHTML = `
+    <p class="calendar-day-title">${escapeHtml(formatDateLong(selectedCalendarDate))}</p>
+    <ul class="calendar-day-list">
+      ${entries
+        .map(
+          ({ item, kind }) => `
+        <li>
+          <button type="button" class="calendar-day-entry" data-select-client="${escapeAttr(item.id)}">
+            <span class="badge badge-${item.status}">${escapeHtml(item.statusLabel)}</span>
+            <span class="calendar-day-entry-text">
+              <strong>${escapeHtml(item.client)}</strong> — ${escapeHtml(item.title)}
+              ${kind === "deadline" ? `<em>(deadline réponse)</em>` : ""}
+            </span>
+          </button>
+        </li>`
+        )
+        .join("")}
+    </ul>
+  `;
+
+  detailsEl.querySelectorAll("[data-select-client]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      selectedClientId = btn.getAttribute("data-select-client");
+      refresh();
+      document.getElementById("cards")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+function initCalendarNav() {
+  const prevBtn = document.getElementById("calendarPrev");
+  const nextBtn = document.getElementById("calendarNext");
+  const todayBtn = document.getElementById("calendarToday");
+  prevBtn?.addEventListener("click", () => {
+    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() - 1, 1);
+    refresh();
+  });
+  nextBtn?.addEventListener("click", () => {
+    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 1);
+    refresh();
+  });
+  todayBtn?.addEventListener("click", () => {
+    calendarViewDate = new Date();
+    selectedCalendarDate = null;
+    refresh();
+  });
+}
+
 let selectedClientId = null;
 
 function renderClientSelect(list) {
@@ -1004,6 +1152,7 @@ function refresh() {
     sorted.length === 1 ? "1 prestation" : `${sorted.length} prestations`;
 
   renderStats(sorted);
+  renderCalendar(PRESTATIONS);
   renderTimeline(sorted);
   renderCards(sorted);
 }
@@ -1017,6 +1166,7 @@ function initHeaderDate() {
 function init() {
   initHeaderDate();
   initTodos();
+  initCalendarNav();
   document.getElementById("searchInput").addEventListener("input", refresh);
   document.getElementById("sortSelect").addEventListener("change", refresh);
   document.getElementById("statusFilter").addEventListener("change", refresh);

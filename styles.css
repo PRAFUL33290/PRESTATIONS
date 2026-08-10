@@ -562,6 +562,242 @@ a:hover {
   margin-top: 10px;
 }
 
+/* —— Calendrier dynamique —— */
+.calendar-section {
+  margin-bottom: 40px;
+}
+
+.calendar-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  padding: 18px 20px 20px;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.calendar-month-label {
+  flex: 1;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.calendar-nav-btn,
+.calendar-today-btn {
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.calendar-nav-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.calendar-today-btn {
+  padding: 6px 14px;
+  font-size: 0.82rem;
+}
+
+.calendar-nav-btn:hover,
+.calendar-today-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.calendar-weekdays span {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--bg-soft);
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  padding: 4px 2px;
+  min-height: 44px;
+}
+
+.calendar-cell:hover {
+  border-color: var(--primary);
+}
+
+.calendar-cell.is-today {
+  background: var(--primary-soft);
+  font-weight: 800;
+}
+
+.calendar-cell.is-selected {
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--primary) inset;
+}
+
+.calendar-cell.has-events .calendar-cell-num {
+  font-weight: 800;
+}
+
+.calendar-cell-empty {
+  background: transparent;
+  cursor: default;
+  aspect-ratio: 1 / 1;
+  min-height: 44px;
+}
+
+.calendar-cell-num {
+  font-size: 0.85rem;
+}
+
+.calendar-cell-dots {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 6px;
+}
+
+.calendar-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.legend-confirme,
+.calendar-dot.legend-confirme {
+  background: var(--success);
+}
+
+.legend-en-attente,
+.calendar-dot.legend-en-attente {
+  background: var(--warning);
+}
+
+.legend-a-suivre,
+.calendar-dot.legend-a-suivre {
+  background: var(--info);
+}
+
+.legend-termine,
+.calendar-dot.legend-termine {
+  background: var(--muted);
+}
+
+.legend-deadline,
+.calendar-dot.legend-deadline {
+  background: var(--primary);
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.calendar-day-details {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+
+.calendar-day-title {
+  font-weight: 800;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.calendar-day-empty {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.calendar-day-list {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.calendar-day-entry {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-soft);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+}
+
+.calendar-day-entry:hover {
+  border-color: var(--primary);
+}
+
+.calendar-day-entry-text em {
+  color: var(--muted);
+  font-style: normal;
+  font-size: 0.82rem;
+}
+
 /* —— Status badges —— */
 .badge {
   display: inline-flex;
