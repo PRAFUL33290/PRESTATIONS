@@ -84,10 +84,35 @@
       </div>
     </section>
 
-    <section class="timeline-section">
+    <section class="calendar-section" aria-label="Calendrier dynamique">
       <div class="section-head">
         <h2>Calendrier</h2>
-        <p class="section-sub">Timeline des prochains événements</p>
+        <p class="section-sub">Vue mensuelle des dates de prestations et des deadlines</p>
+      </div>
+      <div class="calendar-panel">
+        <div class="calendar-nav">
+          <button type="button" class="calendar-nav-btn" id="calendarPrev" aria-label="Mois précédent">‹</button>
+          <h3 class="calendar-month-label" id="calendarMonthLabel"></h3>
+          <button type="button" class="calendar-nav-btn" id="calendarNext" aria-label="Mois suivant">›</button>
+          <button type="button" class="calendar-today-btn" id="calendarToday">Aujourd'hui</button>
+        </div>
+        <div class="calendar-weekdays" id="calendarWeekdays"></div>
+        <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Grille du calendrier"></div>
+        <div class="calendar-legend">
+          <span><i class="legend-dot legend-confirme"></i> Confirmé</span>
+          <span><i class="legend-dot legend-en-attente"></i> En attente</span>
+          <span><i class="legend-dot legend-a-suivre"></i> À suivre</span>
+          <span><i class="legend-dot legend-termine"></i> Terminé</span>
+          <span><i class="legend-dot legend-deadline"></i> Deadline réponse</span>
+        </div>
+        <div class="calendar-day-details" id="calendarDayDetails" hidden></div>
+      </div>
+    </section>
+
+    <section class="timeline-section">
+      <div class="section-head">
+        <h2>Timeline</h2>
+        <p class="section-sub">Liste chronologique des prochains événements</p>
       </div>
       <ol class="timeline" id="timeline" aria-label="Timeline des prestations"></ol>
     </section>
