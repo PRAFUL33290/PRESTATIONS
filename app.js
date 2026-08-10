@@ -69,7 +69,7 @@ Veuillez accueillir chaleureusement Parvati India !`,
     priceDetail:
       "Devis validé par mail le 6 août 2026 : 4 danseurs — 630,00 € TTC, pour 3 danses d’environ 10 minutes. TVA non applicable, art. 293 B du CGI.",
     notes:
-      "Devis n° 2026-0726-ISF validé par Margaux après échange avec la directrice. Déroulé approximatif : 1er passage entre entrée et plat à 20h45, 2e passage entre plat et fromage à 21h30, 3e passage entre fromage et dessert à 22h. Les invités arrivent à 19h30 et le repas commence vers 20h. Restauration possible si arrivée avant 19h, mais éviter de manger avant de danser pour des raisons de digestion. Logement : confirmation à donner après retour des danseuses.",
+      "Devis n° 2026-0726-ISF validé par Margaux après échange avec la directrice. Déroulé approximatif : 1er passage entre entrée et plat à 20h45, 2e passage entre plat et fromage à 21h30, 3e passage entre fromage et dessert à 22h. Les invités arrivent à 19h30 et le repas commence vers 20h. ✅ Repas confirmé par Margaux (mail du 10/08/2026) : repas prévu pour les 4 danseurs à partir de 22h30. Logement : confirmation à donner après retour des danseuses.",
     deadline: null,
     deadlineNote: null,
     deadlineUrgent: false,
@@ -237,13 +237,6 @@ Bonne journée à vous.`,
 /** Tâches manuelles à traiter (cochables, mémorisées dans le navigateur). */
 const TODOS = [
   {
-    id: "siblu-refaire-devis",
-    text: "Refaire le devis pour Siblu Village",
-    detail: "Isabelle Fara · Gala Bollywood · Ronce-les-Bains (26 sept.)",
-    priority: "haute",
-    clientId: "isabelle-fara-siblu",
-  },
-  {
     id: "octobre-sondage-whatsapp",
     text: "Lancer un sondage WhatsApp pour trouver les danseuses d’octobre",
     detail:
@@ -256,13 +249,6 @@ const TODOS = [
     text: "Confirmer le logement pour les 4 danseurs (Siblu)",
     detail: "Retour à donner après validation des danseuses",
     priority: "haute",
-    clientId: "isabelle-fara-siblu",
-  },
-  {
-    id: "siblu-repas",
-    text: "Confirmer le besoin de repas pour Siblu",
-    detail: "Arrivée avant 19h si restauration — restaurateur indisponible après",
-    priority: "normale",
     clientId: "isabelle-fara-siblu",
   },
   {
