@@ -761,10 +761,30 @@ a:hover {
   border-color: var(--primary);
 }
 
+.calendar-day-entry-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .calendar-day-entry-text em {
   color: var(--muted);
   font-style: normal;
   font-size: 0.82rem;
+}
+
+.calendar-day-entry-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.calendar-day-entry-price {
+  font-weight: 700;
+  color: var(--primary);
 }
 
 /* —— Status badges —— */
