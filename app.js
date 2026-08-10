@@ -18,12 +18,21 @@ const PRESTATIONS = [
     status: "confirme",
     statusLabel: "Confirmé",
     dancers: 6,
-    dancersLabel: "6 danseurs",
+    dancersLabel: "6 artistes (5 danseuses + Julien)",
+    dancerNames: ["Emeline", "Camille", "Marika", "Catherine", "Eloha", "Julien (moi)"],
     priceMain: "452,00 € TTC",
     priceDetail:
-      "Version validée — Formule A : 420 € + 32 € transport = 452,00 € TTC (formule B 582 € non retenue). Effectif validé : 6 danseurs.",
+      "Version validée — Formule A : 420 € + 32 € transport = 452,00 € TTC (formule B 582 € non retenue). Effectif validé : 6 artistes. Répartition prévue : 200,00 € pour Julien et 50,40 € pour chacune des 5 danseuses.",
     notes:
-      "2 danses Bollywood + costumes + ambiance Bhangra participative. Durée totale ≈ 20 min · 6 danseurs validés. Hommage aux origines de Nabila (pakistanaise) et union de deux familles / cultures. Présentatrice : Sylvie (annonce aux invités). Prestataire : Praful & danseurs Parvati India (région bordelaise). Tarif validé : 452,00 € TTC.",
+      "2 danses Bollywood + costumes + ambiance Bhangra participative. Durée totale ≈ 20 min · 6 artistes validés pour la prestation du 1er septembre. Hommage aux origines de Nabila (pakistanaise) et union de deux familles / cultures. Présentatrice : Sylvie (annonce aux invités). Prestataire : Praful & danseurs Parvati India (région bordelaise). Tarif validé : 452,00 € TTC.",
+    payout: {
+      ownerLabel: "Julien (moi)",
+      ownerAmount: 200,
+      sharedPoolAmount: 252,
+      sharedCount: 5,
+      sharedMemberLabel: "danseuse",
+      sharedAmountEach: 50.4,
+    },
 
     speechFr: `Bonsoir à toutes et à tous,
 
@@ -481,6 +490,9 @@ function filterPrestations(list, query, status) {
       item.speechFr,
       item.speechEn,
       item.dancersLabel,
+      ...(item.dancerNames || []),
+      item.payout?.ownerLabel,
+      item.payout?.sharedMemberLabel,
       item.validationMessage,
       item.deadlineNote,
       ...(item.tags || []),
@@ -613,10 +625,6 @@ function buildCalendarIndex(list) {
 
 let selectedCalendarDate = null;
 
-// Mois affichés dans le calendrier compact (0 = janvier). On se limite à
-// septembre/octobre : les répétitions avec les danseuses seront calées plus tard.
-const CALENDAR_MINI_MONTHS = [8, 9];
-
 /** Détermine l'année à afficher à partir des prestations (fallback : année en cours). */
 function calendarReferenceYear(index) {
   for (const iso of index.keys()) {
@@ -624,6 +632,26 @@ function calendarReferenceYear(index) {
     if (!Number.isNaN(year)) return year;
   }
   return new Date().getFullYear();
+}
+
+function calendarMonths(index, year, today) {
+  const months = new Set();
+  for (const iso of index.keys()) {
+    const date = parseDate(iso);
+    if (date && date.getFullYear() === year) months.add(date.getMonth());
+  }
+  if (today.getFullYear() === year) months.add(today.getMonth());
+  return [...months].sort((a, b) => a - b);
+}
+
+function formatCalendarSubtitle(months, year) {
+  if (!months.length) return "Calendrier en un coup d'œil";
+  const labels = months.map((month) => MONTHS_FR[month]);
+  const range =
+    labels.length === 1
+      ? labels[0]
+      : `${labels.slice(0, -1).join(", ")} & ${labels.at(-1)}`;
+  return `${range.charAt(0).toUpperCase()}${range.slice(1)} ${year} en un coup d'œil`;
 }
 
 function renderCalendarMiniMonth(year, month, index, today) {
@@ -689,8 +717,12 @@ function renderCalendar(list) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const year = calendarReferenceYear(index);
+  const months = calendarMonths(index, year, today);
+  const subtitleEl = document.getElementById("calendarSubtitle");
 
-  rowEl.innerHTML = CALENDAR_MINI_MONTHS.map((month) => renderCalendarMiniMonth(year, month, index, today)).join("");
+  if (subtitleEl) subtitleEl.textContent = formatCalendarSubtitle(months, year);
+
+  rowEl.innerHTML = months.map((month) => renderCalendarMiniMonth(year, month, index, today)).join("");
 
   rowEl.querySelectorAll("[data-calendar-date]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -897,6 +929,36 @@ function renderCards(list) {
         : "";
 
       const eventDays = daysRemainingLabel(item.eventDate);
+      const dancerRosterBlock =
+        item.dancerNames?.length
+          ? `
+            <div class="detail-box">
+              <p class="detail-box-label">Danseuses / artiste prévus</p>
+              <ul class="detail-list">
+                ${item.dancerNames.map((name) => `<li>${escapeHtml(name)}</li>`).join("")}
+              </ul>
+            </div>`
+          : "";
+      const payoutBlock = item.payout
+        ? `
+            <div class="detail-box detail-box-strong">
+              <p class="detail-box-label">Répartition du cachet</p>
+              <div class="detail-payout-grid">
+                <div class="detail-payout-item">
+                  <span>${escapeHtml(item.payout.ownerLabel)}</span>
+                  <strong>${escapeHtml(formatPriceEuro(item.payout.ownerAmount))}</strong>
+                </div>
+                <div class="detail-payout-item">
+                  <span>À redistribuer aux ${item.payout.sharedCount} ${escapeHtml(item.payout.sharedCount > 1 ? `${item.payout.sharedMemberLabel}s` : item.payout.sharedMemberLabel)}</span>
+                  <strong>${escapeHtml(formatPriceEuro(item.payout.sharedPoolAmount))}</strong>
+                </div>
+                <div class="detail-payout-item">
+                  <span>Par ${escapeHtml(item.payout.sharedMemberLabel)}</span>
+                  <strong>${escapeHtml(formatPriceEuro(item.payout.sharedAmountEach))}</strong>
+                </div>
+              </div>
+            </div>`
+        : "";
 
       return `
         <article class="card" data-id="${escapeAttr(item.id)}">
@@ -968,6 +1030,8 @@ function renderCards(list) {
               <p class="price-detail">${escapeHtml(item.priceDetail)}</p>
             </div>
 
+            ${dancerRosterBlock}
+            ${payoutBlock}
             ${devisBlock}
             <p class="notes">${escapeHtml(item.notes)}</p>
             ${speechBlock}
