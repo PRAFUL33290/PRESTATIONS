@@ -572,20 +572,21 @@ a:hover {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow);
-  padding: 18px 20px 20px;
+  padding: 12px 14px 14px;
+  max-width: 420px;
 }
 
 .calendar-nav {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .calendar-month-label {
   flex: 1;
   text-align: center;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   font-weight: 800;
   text-transform: capitalize;
 }
@@ -602,15 +603,15 @@ a:hover {
 }
 
 .calendar-nav-btn {
-  width: 32px;
-  height: 32px;
-  font-size: 1.1rem;
+  width: 24px;
+  height: 24px;
+  font-size: 0.95rem;
   line-height: 1;
 }
 
 .calendar-today-btn {
-  padding: 6px 14px;
-  font-size: 0.82rem;
+  padding: 4px 10px;
+  font-size: 0.72rem;
 }
 
 .calendar-nav-btn:hover,
@@ -623,13 +624,13 @@ a:hover {
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-bottom: 6px;
+  gap: 3px;
+  margin-bottom: 3px;
 }
 
 .calendar-weekdays span {
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.62rem;
   font-weight: 700;
   color: var(--muted);
   text-transform: uppercase;
@@ -638,7 +639,7 @@ a:hover {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 3px;
 }
 
 .calendar-cell {
@@ -647,15 +648,16 @@ a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 2px;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--bg-soft);
   cursor: pointer;
   font: inherit;
   color: var(--ink);
-  padding: 4px 2px;
-  min-height: 44px;
+  padding: 2px 1px;
+  min-height: 26px;
+  max-height: 34px;
 }
 
 .calendar-cell:hover {
@@ -681,11 +683,12 @@ a:hover {
   background: transparent;
   cursor: default;
   aspect-ratio: 1 / 1;
-  min-height: 44px;
+  min-height: 26px;
+  max-height: 34px;
 }
 
 .calendar-cell-num {
-  font-size: 0.85rem;
+  font-size: 0.72rem;
 }
 
 .calendar-cell-dots {
@@ -693,12 +696,12 @@ a:hover {
   gap: 2px;
   flex-wrap: wrap;
   justify-content: center;
-  min-height: 6px;
+  min-height: 5px;
 }
 
 .calendar-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -739,9 +742,9 @@ a:hover {
 .calendar-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 14px;
-  font-size: 0.8rem;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 0.72rem;
   color: var(--muted);
 }
 
