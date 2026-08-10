@@ -725,6 +725,14 @@ function renderCalendar(list) {
             <span class="calendar-day-entry-text">
               <strong>${escapeHtml(item.client)}</strong> — ${escapeHtml(item.title)}
               ${kind === "deadline" ? `<em>(deadline réponse)</em>` : ""}
+              ${
+                kind !== "deadline"
+                  ? `<span class="calendar-day-entry-meta">
+                      ${item.dancersLabel ? `<span class="calendar-day-entry-dancers">👯 ${escapeHtml(item.dancersLabel)}</span>` : ""}
+                      ${item.priceMain ? `<span class="calendar-day-entry-price">💶 ${escapeHtml(item.priceMain)}</span>` : ""}
+                    </span>`
+                  : ""
+              }
             </span>
           </button>
         </li>`
