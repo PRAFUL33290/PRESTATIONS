@@ -611,33 +611,31 @@ function buildCalendarIndex(list) {
   return index;
 }
 
-let calendarViewDate = new Date();
 let selectedCalendarDate = null;
 
-function renderCalendar(list) {
-  const monthLabel = document.getElementById("calendarMonthLabel");
-  const weekdaysEl = document.getElementById("calendarWeekdays");
-  const gridEl = document.getElementById("calendarGrid");
-  const detailsEl = document.getElementById("calendarDayDetails");
-  if (!monthLabel || !weekdaysEl || !gridEl || !detailsEl) return;
+// Mois affichés dans le calendrier compact (0 = janvier). On se limite à
+// septembre/octobre : les répétitions avec les danseuses seront calées plus tard.
+const CALENDAR_MINI_MONTHS = [8, 9];
 
-  const year = calendarViewDate.getFullYear();
-  const month = calendarViewDate.getMonth();
-  monthLabel.textContent = `${MONTHS_FR[month]} ${year}`;
+/** Détermine l'année à afficher à partir des prestations (fallback : année en cours). */
+function calendarReferenceYear(index) {
+  for (const iso of index.keys()) {
+    const year = Number(iso.slice(0, 4));
+    if (!Number.isNaN(year)) return year;
+  }
+  return new Date().getFullYear();
+}
 
-  weekdaysEl.innerHTML = DAYS_FR.slice(1)
-    .concat(DAYS_FR[0])
-    .map((d) => `<span>${d.slice(0, 3)}</span>`)
-    .join("");
-
-  const index = buildCalendarIndex(list);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
+function renderCalendarMiniMonth(year, month, index, today) {
   const firstOfMonth = new Date(year, month, 1);
   const startOffset = (firstOfMonth.getDay() + 6) % 7; // lundi = 0
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+
+  const weekdays = DAYS_FR.slice(1)
+    .concat(DAYS_FR[0])
+    .map((d) => `<span>${d.slice(0, 1)}</span>`)
+    .join("");
 
   const cells = [];
   for (let i = 0; i < totalCells; i++) {
@@ -673,9 +671,28 @@ function renderCalendar(list) {
     `);
   }
 
-  gridEl.innerHTML = cells.join("");
+  return `
+    <div class="calendar-mini">
+      <h3 class="calendar-mini-label">${MONTHS_FR[month]} ${year}</h3>
+      <div class="calendar-weekdays calendar-weekdays-mini">${weekdays}</div>
+      <div class="calendar-grid calendar-grid-mini">${cells.join("")}</div>
+    </div>
+  `;
+}
 
-  gridEl.querySelectorAll("[data-calendar-date]").forEach((btn) => {
+function renderCalendar(list) {
+  const rowEl = document.getElementById("calendarMiniRow");
+  const detailsEl = document.getElementById("calendarDayDetails");
+  if (!rowEl || !detailsEl) return;
+
+  const index = buildCalendarIndex(list);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const year = calendarReferenceYear(index);
+
+  rowEl.innerHTML = CALENDAR_MINI_MONTHS.map((month) => renderCalendarMiniMonth(year, month, index, today)).join("");
+
+  rowEl.querySelectorAll("[data-calendar-date]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const iso = btn.getAttribute("data-calendar-date");
       selectedCalendarDate = selectedCalendarDate === iso ? null : iso;
@@ -722,25 +739,6 @@ function renderCalendar(list) {
       refresh();
       document.getElementById("cards")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  });
-}
-
-function initCalendarNav() {
-  const prevBtn = document.getElementById("calendarPrev");
-  const nextBtn = document.getElementById("calendarNext");
-  const todayBtn = document.getElementById("calendarToday");
-  prevBtn?.addEventListener("click", () => {
-    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() - 1, 1);
-    refresh();
-  });
-  nextBtn?.addEventListener("click", () => {
-    calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 1);
-    refresh();
-  });
-  todayBtn?.addEventListener("click", () => {
-    calendarViewDate = new Date();
-    selectedCalendarDate = null;
-    refresh();
   });
 }
 
@@ -1166,7 +1164,6 @@ function initHeaderDate() {
 function init() {
   initHeaderDate();
   initTodos();
-  initCalendarNav();
   document.getElementById("searchInput").addEventListener("input", refresh);
   document.getElementById("sortSelect").addEventListener("change", refresh);
   document.getElementById("statusFilter").addEventListener("change", refresh);
