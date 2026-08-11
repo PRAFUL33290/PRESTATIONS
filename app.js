@@ -78,7 +78,7 @@ Veuillez accueillir chaleureusement Parvati India !`,
     priceDetail:
       "Devis validé par mail le 6 août 2026 : 4 danseurs — 630,00 € TTC, pour 3 danses d’environ 10 minutes. TVA non applicable, art. 293 B du CGI.",
     notes:
-      "Devis n° 2026-0726-ISF validé par Margaux après échange avec la directrice. Déroulé approximatif : 1er passage entre entrée et plat à 20h45, 2e passage entre plat et fromage à 21h30, 3e passage entre fromage et dessert à 22h. Les invités arrivent à 19h30 et le repas commence vers 20h. ✅ Repas confirmé par Margaux (mail du 10/08/2026) : repas prévu pour les 4 danseurs à partir de 22h30. Logement : confirmation à donner après retour des danseuses.",
+      "Devis n° 2026-0726-ISF validé par Margaux après échange avec la directrice. Déroulé approximatif : 1er passage entre entrée et plat à 20h45, 2e passage entre plat et fromage à 21h30, 3e passage entre fromage et dessert à 22h. Les invités arrivent à 19h30 et le repas commence vers 20h. ✅ Repas confirmé par Margaux (mail du 10/08/2026) : repas prévu pour les 4 danseurs à partir de 22h30. Logement : confirmation à donner après retour des danseuses. ⚠️ Documents à signer envoyés par Margaux : le contrat exige une attestation d'assurance professionnelle, que nous n'avons pas. Un mail a été envoyé à Margaux pour l'en informer — en attente de sa réponse.",
     deadline: null,
     deadlineNote: null,
     deadlineUrgent: false,
@@ -257,6 +257,14 @@ const TODOS = [
     id: "siblu-logement",
     text: "Confirmer le logement pour les 4 danseurs (Siblu)",
     detail: "Retour à donner après validation des danseuses",
+    priority: "haute",
+    clientId: "isabelle-fara-siblu",
+  },
+  {
+    id: "siblu-assurance-pro",
+    text: "Attendre la réponse de Margaux au sujet de l'assurance professionnelle (Siblu)",
+    detail:
+      "Le contrat envoyé par Margaux exige une attestation d'assurance professionnelle, que nous n'avons pas. Mail envoyé à Margaux pour l'en informer, en attente de sa réponse avant de signer et renvoyer les documents.",
     priority: "haute",
     clientId: "isabelle-fara-siblu",
   },
