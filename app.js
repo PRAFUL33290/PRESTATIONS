@@ -74,6 +74,7 @@ Veuillez accueillir chaleureusement Parvati India !`,
     statusLabel: "Confirmé",
     dancers: 4,
     dancersLabel: "4 danseurs",
+    dancerNames: ["Praful (moi)", "Jenny", "Eloha", "Camille"],
     priceMain: "630,00 € TTC",
     priceDetail:
       "Devis validé par mail le 6 août 2026 : 4 danseurs — 630,00 € TTC, pour 3 danses d’environ 10 minutes. TVA non applicable, art. 293 B du CGI.",
@@ -933,7 +934,7 @@ function renderCards(list) {
         item.dancerNames?.length
           ? `
             <div class="detail-box">
-              <p class="detail-box-label">Danseuses / artiste prévus</p>
+              <p class="detail-box-label">Artistes prévus</p>
               <ul class="detail-list">
                 ${item.dancerNames.map((name) => `<li>${escapeHtml(name)}</li>`).join("")}
               </ul>
